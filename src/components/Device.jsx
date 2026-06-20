@@ -19,7 +19,7 @@ function Tile({ icon, value, label }) {
   )
 }
 
-export default function Device({ score, factors, location, updatedAt }) {
+export default function Device({ score, factors, location, updatedAt, modeObj }) {
   return (
     <div
       className="relative bg-bg-device border border-border rounded-[24px]"
@@ -35,10 +35,10 @@ export default function Device({ score, factors, location, updatedAt }) {
         {/* Header */}
         <div className="text-center">
           <div
-            className="font-semibold"
-            style={{ fontSize: 10, letterSpacing: '0.2em', color: '#4a5280' }}
+            className="font-semibold flex items-center justify-center gap-1.5"
+            style={{ fontSize: 10, letterSpacing: '0.2em', color: modeObj?.accent || '#4a5280' }}
           >
-            MOTOMETER
+            {modeObj?.icon} {(modeObj?.label || 'MOTOMETER').toUpperCase()}
           </div>
           <div className="mt-1" style={{ fontSize: 12, color: '#6878a8' }}>
             {location}

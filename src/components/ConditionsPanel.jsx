@@ -1,14 +1,5 @@
 import { scoreColor } from '../engine/scoreEngine.js'
-
-const SLIDERS = [
-  { key: 'temperature', label: 'Temperature', min: 0, max: 120, step: 1, unit: '°F' },
-  { key: 'windSpeed', label: 'Wind Speed', min: 0, max: 60, step: 1, unit: 'mph' },
-  { key: 'rain', label: 'Rain Intensity', min: 0, max: 100, step: 1, unit: '%' },
-  { key: 'humidity', label: 'Humidity', min: 0, max: 100, step: 1, unit: '%' },
-  { key: 'visibility', label: 'Visibility', min: 0, max: 10, step: 0.1, unit: 'mi' },
-  { key: 'roadQuality', label: 'Road Quality', min: 1, max: 10, step: 1, unit: '/10' },
-  { key: 'traffic', label: 'Traffic Density', min: 0, max: 10, step: 1, unit: '/10' },
-]
+import { FACTOR_DEFS } from '../config/factors.js'
 
 function SectionLabel({ children }) {
   return (
@@ -61,14 +52,15 @@ export function RiderToggles({ toggles, setToggle }) {
   )
 }
 
-export default function ConditionsPanel({ factors, setFactor, scoreColorValue }) {
+export default function ConditionsPanel({ factors, setFactor, scoreColorValue, factorKeys }) {
   const color = scoreColorValue ?? scoreColor(50)
+  const sliders = (factorKeys || Object.keys(FACTOR_DEFS)).map((k) => FACTOR_DEFS[k])
 
   return (
     <div>
       <SectionLabel>Conditions</SectionLabel>
       <div className="flex flex-col gap-3">
-        {SLIDERS.map((s) => {
+        {sliders.map((s) => {
           const val = factors[s.key]
           const shown = s.step < 1 ? Number(val).toFixed(1) : Math.round(val)
           return (

@@ -1,8 +1,6 @@
 // All National Weather Service + Census geocoder fetch logic.
 // On ANY failure at any step we silently fall back to mock data.
 
-import { computeScore } from '../engine/scoreEngine.js'
-
 const NWS_HEADERS = {
   // NWS asks for a User-Agent identifying the app; harmless in browsers.
   Accept: 'application/geo+json',
@@ -20,14 +18,15 @@ export const MOCK_CURRENT = {
   visibility: 10,
 }
 
+// Raw factors per day — score is computed per active mode by the app.
 const MOCK_WEEK = [
-  { day: 'Mon', score: 81, temp: 74, forecast: 'Sunny' },
-  { day: 'Tue', score: 73, temp: 79, forecast: 'Partly Cloudy' },
-  { day: 'Wed', score: 44, temp: 68, forecast: 'Rain' },
-  { day: 'Thu', score: 36, temp: 61, forecast: 'Heavy Rain' },
-  { day: 'Fri', score: 65, temp: 71, forecast: 'Cloudy' },
-  { day: 'Sat', score: 92, temp: 77, forecast: 'Sunny' },
-  { day: 'Sun', score: 88, temp: 76, forecast: 'Clear' },
+  { day: 'Mon', temp: 74, wind: 8, rain: 0, forecast: 'Sunny' },
+  { day: 'Tue', temp: 79, wind: 12, rain: 20, forecast: 'Partly Cloudy' },
+  { day: 'Wed', temp: 68, wind: 18, rain: 70, forecast: 'Rain' },
+  { day: 'Thu', temp: 61, wind: 24, rain: 90, forecast: 'Heavy Rain' },
+  { day: 'Fri', temp: 71, wind: 14, rain: 30, forecast: 'Cloudy' },
+  { day: 'Sat', temp: 77, wind: 6, rain: 0, forecast: 'Sunny' },
+  { day: 'Sun', temp: 76, wind: 9, rain: 0, forecast: 'Clear' },
 ]
 
 export function getMockData() {
@@ -160,26 +159,13 @@ async function fetchWeek(forecastUrl) {
   // Group: take the daytime period for each day.
   const days = periods.filter((p) => p.isDaytime).slice(0, 7)
   const source = days.length ? days : periods.slice(0, 7)
-  return source.map((p) => {
-    const temp = p.temperature
-    const wind = parseWindString(p.windSpeed)
-    const rain = p.probabilityOfPrecipitation?.value ?? rainFromWeather(p.shortForecast)
-    const score = computeScore({
-      temperature: temp,
-      windSpeed: wind,
-      rain,
-      humidity: 55,
-      visibility: 10,
-      roadQuality: 7,
-      traffic: 4,
-    })
-    return {
-      day: dayAbbrev(p.name),
-      score,
-      temp,
-      forecast: p.shortForecast || '',
-    }
-  })
+  return source.map((p) => ({
+    day: dayAbbrev(p.name),
+    temp: p.temperature,
+    wind: parseWindString(p.windSpeed),
+    rain: p.probabilityOfPrecipitation?.value ?? rainFromWeather(p.shortForecast),
+    forecast: p.shortForecast || '',
+  }))
 }
 
 /**

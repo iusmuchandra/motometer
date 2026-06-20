@@ -13,8 +13,9 @@ Open http://localhost:5173 — no API key, no `.env`, works out of the box.
 
 ## Notes
 
-- Weather data comes from the **National Weather Service API** (free, no auth) plus the **Census geocoder** (free, no auth). Both are **US-only** — search US cities.
-- On any fetch failure at any step, the app silently falls back to mock data (Austin, TX) and keeps working.
+- Weather data comes from the **National Weather Service API** (free, no auth). City names are geocoded via the **Open-Meteo geocoder** (free, no auth), with the Census geocoder as a fallback for street addresses. Weather is **US-only** — search US cities.
+- On any fetch/geocode failure, the app shows a notice and silently falls back to mock data (Austin, TX) so it always keeps working.
+- The hero photo (`public/moto-hero.jpg`) is from [Unsplash](https://unsplash.com) (free license).
 
 ## File map
 

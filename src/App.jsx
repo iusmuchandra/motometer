@@ -3,7 +3,6 @@ import Device from './components/Device.jsx'
 import ConditionsPanel, { RiderToggles } from './components/ConditionsPanel.jsx'
 import HazardChips from './components/HazardChips.jsx'
 import ForecastStrip from './components/ForecastStrip.jsx'
-import MotorcycleSilhouette from './components/MotorcycleSilhouette.jsx'
 import { computeScore, scoreColor } from './engine/scoreEngine.js'
 import { fetchCityWeather, getMockData, MOCK_CURRENT } from './api/nwsClient.js'
 
@@ -94,12 +93,30 @@ export default function App() {
   return (
     <div className="min-h-screen w-full" style={{ background: '#07080f', '--thumb-color': color }}>
       <div className="mx-auto max-w-[1200px] px-5 py-8 flex flex-col lg:flex-row gap-8">
-        {/* LEFT — device (60%) */}
-        <div className="lg:w-[60%] relative flex items-center justify-center">
-          {/* Faint motorcycle backdrop, tinted to the live score color */}
-          <MotorcycleSilhouette
-            className="pointer-events-none absolute inset-0 m-auto w-[115%] max-w-none"
-            style={{ color, opacity: 0.06, transition: 'color 600ms ease' }}
+        {/* LEFT — device (60%) over a cinematic motorcycle hero */}
+        <div className="lg:w-[60%] relative flex items-center justify-center min-h-[620px] rounded-3xl overflow-hidden border border-border">
+          {/* Photographic hero */}
+          <img
+            src="/moto-hero.jpg"
+            alt="Motorcycle at dusk on a mountain road"
+            className="pointer-events-none absolute inset-0 w-full h-full object-cover"
+          />
+          {/* Darkening gradient so the device stays legible */}
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(180deg, rgba(7,8,15,0.62) 0%, rgba(7,8,15,0.50) 45%, rgba(7,8,15,0.82) 100%)',
+            }}
+          />
+          {/* Score-reactive color wash */}
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background: `radial-gradient(circle at 50% 42%, ${color} 0%, transparent 62%)`,
+              opacity: 0.16,
+              transition: 'background 600ms ease',
+            }}
           />
           <Device score={score} factors={factors} location={location} updatedAt={updatedAt} />
         </div>

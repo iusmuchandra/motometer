@@ -92,32 +92,46 @@ export default function App() {
 
   return (
     <div className="min-h-screen w-full" style={{ background: '#07080f', '--thumb-color': color }}>
-      <div className="mx-auto max-w-[1200px] px-5 py-8 flex flex-col lg:flex-row gap-8">
-        {/* LEFT — device (60%) over a cinematic motorcycle hero */}
-        <div className="lg:w-[60%] relative flex items-center justify-center min-h-[620px] rounded-3xl overflow-hidden border border-border">
-          {/* Photographic hero */}
-          <img
-            src="/moto-hero.jpg"
-            alt="Motorcycle at dusk on a mountain road"
-            className="pointer-events-none absolute inset-0 w-full h-full object-cover"
-          />
-          {/* Darkening gradient so the device stays legible */}
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                'linear-gradient(180deg, rgba(7,8,15,0.62) 0%, rgba(7,8,15,0.50) 45%, rgba(7,8,15,0.82) 100%)',
-            }}
-          />
-          {/* Score-reactive color wash */}
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background: `radial-gradient(circle at 50% 42%, ${color} 0%, transparent 62%)`,
-              opacity: 0.16,
-              transition: 'background 600ms ease',
-            }}
-          />
+      {/* HERO — full motorcycle, full width */}
+      <div className="relative w-full overflow-hidden h-[40vh] min-h-[280px] max-h-[440px]">
+        <img
+          src="/moto-hero.jpg"
+          alt="Motorcycle in side profile"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+        />
+        {/* fade into the page + slight darken for title legibility */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(7,8,15,0.45) 0%, rgba(7,8,15,0.15) 40%, rgba(7,8,15,0.95) 100%)',
+          }}
+        />
+        {/* score-reactive wash */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `radial-gradient(120% 80% at 50% 30%, ${color} 0%, transparent 55%)`,
+            opacity: 0.14,
+            transition: 'background 600ms ease',
+          }}
+        />
+        <div className="absolute inset-x-0 bottom-0 flex flex-col items-center pb-6 text-center">
+          <h1
+            className="font-extrabold text-white"
+            style={{ fontSize: 40, letterSpacing: '0.18em' }}
+          >
+            MOTOMETER
+          </h1>
+          <p className="text-text-muted" style={{ fontSize: 12, letterSpacing: '0.08em' }}>
+            Premium motorcycle ride-condition scoring
+          </p>
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-[1200px] px-5 pb-10 pt-8 -mt-6 relative flex flex-col lg:flex-row gap-8">
+        {/* LEFT — device (60%) */}
+        <div className="lg:w-[60%] flex items-start justify-center">
           <Device score={score} factors={factors} location={location} updatedAt={updatedAt} />
         </div>
 

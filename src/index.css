@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-page: #07080f;
+  --bg-device: #0e1018;
+  --bg-tile: #12141f;
+  --border: #1c1f2e;
+  --text-primary: #e8eaf2;
+  --text-muted: #4a5280;
+  --accent: #3b6fd4;
+  --score-green: #22c55e;
+  --score-amber: #f59e0b;
+  --score-red: #ef4444;
+  /* live thumb color, set from JS to match score glow */
+  --thumb-color: #3b6fd4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Range sliders ---- */
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  background: transparent;
+  cursor: pointer;
+  margin: 6px 0;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+  background: #1c1f2e;
+  height: 4px;
+  border-radius: 2px;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -6px;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: var(--thumb-color);
+  box-shadow: 0 0 8px 1px color-mix(in srgb, var(--thumb-color) 50%, transparent);
+  transition: background 300ms ease, box-shadow 300ms ease;
+}
+
+input[type='range']::-moz-range-track {
+  background: #1c1f2e;
+  height: 4px;
+  border-radius: 2px;
+}
+
+input[type='range']::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  border: none;
+  border-radius: 50%;
+  background: var(--thumb-color);
+  box-shadow: 0 0 8px 1px color-mix(in srgb, var(--thumb-color) 50%, transparent);
+}
+
+/* hide scrollbar on forecast strip but keep scrollability */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

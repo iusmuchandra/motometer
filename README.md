@@ -22,7 +22,7 @@ Open http://localhost:5173 — no API key, no `.env`, works out of the box.
 
 - Weather data comes from the **National Weather Service API** (free, no auth). City names are geocoded via the **Open-Meteo geocoder** (free, no auth), with the Census geocoder as a fallback for street addresses. Weather is **US-only** — search US cities.
 - On any fetch/geocode failure, the app shows a notice and silently falls back to mock data (Austin, TX) so it always keeps working.
-- The hero photo (`public/moto-hero.jpg`) is from [Unsplash](https://unsplash.com) (free license).
+- Each activity has its own **hero video + poster** ([Pexels](https://pexels.com), free license), streamed at runtime; the poster paints instantly and is the fallback if a clip can't play. (Production note: for full control you'd self-host transcoded loops on your own CDN.) The favicon/notification icon still uses `public/moto-hero.jpg`.
 
 ## File map
 

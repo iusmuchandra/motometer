@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import GaugeArc from '../components/GaugeArc.jsx'
+import HeroMedia from '../components/HeroMedia.jsx'
 import { useAppState } from '../state/AppState.jsx'
 import { MODE_LIST, scoreForMode } from '../config/modes.js'
 import { scoreColor } from '../engine/scoreEngine.js'
@@ -45,6 +46,11 @@ export default function Ambient() {
       className="relative min-h-screen w-full overflow-hidden flex flex-col items-center justify-center"
       style={{ background: '#050609' }}
     >
+      {/* Faint per-activity footage behind everything */}
+      <div className="pointer-events-none absolute inset-0" style={{ opacity: 0.5 }}>
+        <HeroMedia modeKey={mode.key} color={color} dark={0.85} />
+      </div>
+
       {/* Backlight glow filling the background */}
       <div
         className="pointer-events-none absolute inset-0"

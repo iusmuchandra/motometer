@@ -4,6 +4,7 @@ import HazardChips from '../components/HazardChips.jsx'
 import ForecastStrip from '../components/ForecastStrip.jsx'
 import ModeSwitcher from '../components/ModeSwitcher.jsx'
 import NavBar from '../components/NavBar.jsx'
+import HeroMedia from '../components/HeroMedia.jsx'
 import { useAppState } from '../state/AppState.jsx'
 
 function SectionLabel({ children }) {
@@ -43,28 +44,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen w-full" style={{ background: '#07080f', '--thumb-color': color }}>
-      {/* HERO — full motorcycle, full width */}
+      {/* HERO — per-activity video + poster, full width */}
       <div className="relative w-full overflow-hidden h-[40vh] min-h-[280px] max-h-[440px]">
-        <img
-          src="/moto-hero.jpg"
-          alt="Motorcycle in side profile"
-          className="absolute inset-0 w-full h-full object-cover object-center"
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'linear-gradient(180deg, rgba(7,8,15,0.45) 0%, rgba(7,8,15,0.15) 40%, rgba(7,8,15,0.95) 100%)',
-          }}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `radial-gradient(120% 80% at 50% 30%, ${color} 0%, transparent 55%)`,
-            opacity: 0.14,
-            transition: 'background 600ms ease',
-          }}
-        />
+        <HeroMedia modeKey={mode} color={color} dark={0.45} />
         <div className="absolute top-4 right-4 z-10">
           <NavBar accent={accent} />
         </div>
